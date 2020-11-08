@@ -8,17 +8,17 @@ public class EventTemplate {
 		String event = xmlMap.get("Event");
 		switch (event) {
 		case "subscribe": 
-			// »ñÈ¡ticketÔªËØ
+			// è·å–ticketå…ƒç´ 
 			String ticket = xmlMap.get("Ticket");
 			if (ticket != null && ticket.length() > 0) {
-				// É¨ÃèÁË´ø²ÎÊıµÄ¶şÎ¬Âë£¬²¢µã»÷ÁË¹Ø×¢
+				// æ‰«æäº†å¸¦å‚æ•°çš„äºŒç»´ç ï¼Œå¹¶ç‚¹å‡»äº†å…³æ³¨
 				return TextTemplate.getEventWithParamsTemplate(xmlMap);				
 			}else {
-				// Ö±½Ó¹Ø×¢£¬Ã»ÓĞ´ø²Î¶şÎ¬Âë
+				// ç›´æ¥å…³æ³¨ï¼Œæ²¡æœ‰å¸¦å‚äºŒç»´ç 
 				return TextTemplate.getEventWithoutParamsTemplate(xmlMap);
 			}
 		case "SCAN":
-			// ÒÑ¹Ø×¢£¬
+			// å·²å…³æ³¨ï¼Œ
 			return TextTemplate.getEventParamsTemplate(xmlMap);		
 		}
 		

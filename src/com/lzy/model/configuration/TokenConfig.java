@@ -8,38 +8,38 @@ import cn.hutool.json.JSONUtil;
 
 public class TokenConfig {
 
-	// »ñÈ¡Access Token ½Ó¿Úµ÷ÓÃµØÖ·
+	// è·å–Access Token æ¥å£è°ƒç”¨åœ°å€
 	private static String accessTokenUrl = " https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	private static String APPID = "wxdfc9f9997018cd3b";
 	private static String APPSECRET = "78bb7c7a9afab8c456d1dff72d8a15e1";
 	
-	// »ñÈ¡¿Í·şµÄurl
+	// è·å–å®¢æœçš„url
 	private static String customerurl = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN";
-	// »ñÈ¡ÓÃ»§µÄ»ù±¾ĞÅÏ¢µÄurl
+	// è·å–ç”¨æˆ·çš„åŸºæœ¬ä¿¡æ¯çš„url
 	private static String userurl = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
-	// »ñÈ¡ÓÃ»§¶şÎ¬ÂëµÄurl
+	// è·å–ç”¨æˆ·äºŒç»´ç çš„url
 	private static String qrcodeurl = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=TOKEN";
-	// ĞÂÔöÁÙÊ±ËØ²Ä
+	// æ–°å¢ä¸´æ—¶ç´ æ
 	private static String matterurl = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE ";
 	
 	private static AccessToken at;
 
-	// ³õÊ¼»¯ÎÒµÄtoken
+	// åˆå§‹åŒ–æˆ‘çš„token
 	private static void initToken() {
-		// Ìæ»»appid ºÍ appsecret
+		// æ›¿æ¢appid å’Œ appsecret
 		String url = accessTokenUrl.replace("APPID", APPID).replace("APPSECRET", APPSECRET);
-		// ´ÓÎ¢ĞÅ·şÎñÆ÷»ñÈ¡¶ÔÓ¦È¨ÏŞ(½Ó¿Úµ÷ÓÃÇëÇó)
+		// ä»å¾®ä¿¡æœåŠ¡å™¨è·å–å¯¹åº”æƒé™(æ¥å£è°ƒç”¨è¯·æ±‚)
 		String tokenStr = HttpUtil.get(url);
-		// ½âÎöÎ¢ĞÅ·şÎñÆ÷·¢¹ıÀ´µÄjsonÇëÇó
+		// è§£æå¾®ä¿¡æœåŠ¡å™¨å‘è¿‡æ¥çš„jsonè¯·æ±‚
 		JSONObject jsonObject = JSONUtil.parseObj(tokenStr);
-		// È¡³ötokenºÍexpire
+		// å–å‡ºtokenå’Œexpire
 		String token = jsonObject.getStr("access_token");
 		String expireIn = jsonObject.getStr("expires_in");
-		// ·â×°½øtokenÖµ
+		// å°è£…è¿›tokenå€¼
 		at = new AccessToken(token, expireIn);
 	}
 
-	// »ñÈ¡token
+	// è·å–token
 	public static String getAccessToken() {
 		if (at == null || at.expiredStatus()) {
 			initToken();
@@ -47,26 +47,26 @@ public class TokenConfig {
 		return at.getAccesstoken();
 	}
 
-	// »ñÈ¡¿Í·şµÄµ÷ÓÃ½Ó¿Ú
+	// è·å–å®¢æœçš„è°ƒç”¨æ¥å£
 	public static String getCustomerUrl() {
 		customerurl = customerurl.replace("ACCESS_TOKEN", TokenConfig.getAccessToken());
 		return customerurl;
 	}
 	
-	// »ñÈ¡ÓÃ»§»ù±¾ĞÅÏ¢µ÷ÓÃ½Ó¿Ú
+	// è·å–ç”¨æˆ·åŸºæœ¬ä¿¡æ¯è°ƒç”¨æ¥å£
 	public static String getUserUrl() {
-		// µ÷ÓÃÓÃ»§µÄ»ù±¾ĞÅÏ¢½Ó¿Ú
+		// è°ƒç”¨ç”¨æˆ·çš„åŸºæœ¬ä¿¡æ¯æ¥å£
 		userurl = userurl.replace("ACCESS_TOKEN", TokenConfig.getAccessToken());
 		return userurl;
 	}
 	
-	// »ñÈ¡¹«ÖÚºÅ¶şÎ¬ÂëµÄµ÷ÓÃ½Ó¿Ú
+	// è·å–å…¬ä¼—å·äºŒç»´ç çš„è°ƒç”¨æ¥å£
 	public static String getQrcodeUrl() {
 		qrcodeurl = qrcodeurl.replace("TOKEN", TokenConfig.getAccessToken());
 		return qrcodeurl;
 	}
 	
-	// ĞÂÔöÁÙÊ±ËØ²Ä
+	// æ–°å¢ä¸´æ—¶ç´ æ
 	public static String getMatterUrl() {
 		matterurl = matterurl.replace("ACCESS_TOKEN", TokenConfig.getAccessToken()).replace("TYPE", "image");
 		return matterurl;

@@ -21,21 +21,21 @@ import cn.hutool.json.JSONUtil;
 
 public class WxDao {
 
-	// ´¦ÀíxmlĞÅÏ¢
+	// å¤„ç†xmlä¿¡æ¯
 	public static Map<String, String> handleMap(HttpServletRequest request) {
 		try {
 			InputStream in = request.getInputStream();
-			// ×¼±¸Ò»¸ömap
+			// å‡†å¤‡ä¸€ä¸ªmap
 			Map<String, String> xmlMap = new HashMap<String, String>();
-			// xml½âÎöÆ÷--->dom4j
+			// xmlè§£æå™¨--->dom4j
 			SAXReader reader = new SAXReader();
-			// »ñÈ¡µ½Õû¸öxmlÄÚÈİ
+			// è·å–åˆ°æ•´ä¸ªxmlå†…å®¹
 			Document document = reader.read(in);
-			// »ñÈ¡¸ù½Úµã
+			// è·å–æ ¹èŠ‚ç‚¹
 			Element root = document.getRootElement();
-			// »ñÈ¡ËùÓĞ×Ó½Úµã
+			// è·å–æ‰€æœ‰å­èŠ‚ç‚¹
 			List<Element> elements = root.elements();
-			// ½«½Úµã´æÈëmapÖĞ
+			// å°†èŠ‚ç‚¹å­˜å…¥mapä¸­
 			for (Element e : elements) {
 				String key = e.getName();
 				String value = e.getStringValue();
@@ -50,17 +50,17 @@ public class WxDao {
 		return null;
 	}
 
-	// »ØËÍÎ¢ĞÅ¶Ë×Ö·û´®
+	// å›é€å¾®ä¿¡ç«¯å­—ç¬¦ä¸²
 	public static String getResponseStr(Map<String, String> xmlMap) {
-		// È¡³öMsgType
+		// å–å‡ºMsgType
 		String msgType = xmlMap.get("MsgType");
 		String resultXml = "";
 		switch (msgType) {
-		// ´¦ÀíÎÄ±¾
+		// å¤„ç†æ–‡æœ¬
 		case "text":
 			resultXml = handleTextMessage(xmlMap);
 			break;
-		// ´¦ÀíÊÂ¼ş
+		// å¤„ç†äº‹ä»¶
 		case "event":
 			resultXml = handleEventMessage(xmlMap);
 			break;
@@ -68,27 +68,27 @@ public class WxDao {
 
 		return resultXml;
 	}
-	// ´¦ÀíÎÄ±¾
+	// å¤„ç†æ–‡æœ¬
 	private static String handleTextMessage(Map<String, String> xmlMap) {
 		return TextTemplate.getTextTemplate(xmlMap);
 	}
 
-	// ´¦ÀíÊÂ¼ş
+	// å¤„ç†äº‹ä»¶
 	private static String handleEventMessage(Map<String, String> xmlMap) {
-		// »ñÈ¡ÓÃ»§url
+		// è·å–ç”¨æˆ·url
 		String url = TokenConfig.getUserUrl();
 		url = url.replace("OPENID", xmlMap.get("FromUserName"));
-		// ´ÓÎ¢ĞÅ·şÎñÆ÷»ñÈ¡¶ÔÓ¦µÄÈ¨ÏŞ
+		// ä»å¾®ä¿¡æœåŠ¡å™¨è·å–å¯¹åº”çš„æƒé™
 		String userStr = HttpUtil.get(url);
-		// ½âÎö´ÓÎ¢ĞÅ·şÎñÆ÷·¢¹ıÀ´µÄjsonÇëÇó
+		// è§£æä»å¾®ä¿¡æœåŠ¡å™¨å‘è¿‡æ¥çš„jsonè¯·æ±‚
 		JSONObject jsonObject = JSONUtil.parseObj(userStr);
 //		System.out.println(jsonObject);
-		// È¡³önickname
+		// å–å‡ºnickname
 		String nickname = jsonObject.getStr("nickname");
 		String headimgurl = jsonObject.getStr("headimgurl");
 //		System.out.println(headimgurl);	
 		
-		// ¹Ø×¢ºó»ñÈ¡¿Í·şÏûÏ¢-->Êä³ö¹Ø×¢»¶Ó­´Ê
+		// å…³æ³¨åè·å–å®¢æœæ¶ˆæ¯-->è¾“å‡ºå…³æ³¨æ¬¢è¿è¯
 		TextTemplate.getCustomerRequest(nickname, xmlMap);
 		
 		

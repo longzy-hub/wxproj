@@ -22,9 +22,9 @@ public class AccessToken {
 		this.expireTime = System.currentTimeMillis() + Integer.parseInt(expireIn)*1000;
 	}
 	
-	// 过期时间
+	// 杩囨湡鏃堕棿
 	public boolean expiredStatus() {
-		// 如果返true,身份过期
+		// 濡傛灉杩攖rue,韬唤杩囨湡
 		return System.currentTimeMillis() > expireTime;
 	}
 	

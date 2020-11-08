@@ -1,10 +1,23 @@
 package com.lzy.model.configuration;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.lzy.util.StringUtils;
+import javax.imageio.ImageIO;
 
+import com.lzy.util.StringUtils;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
+import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
@@ -15,16 +28,16 @@ public class TextTemplate {
 	public static String getContent(int type, String nickname) {
 		switch (type) {
 		case 1:
-			return "¸ĞĞ»ÄãµÄ»Ø¸´";
+			return "æ„Ÿè°¢ä½ çš„å›å¤";
 		case 2:
-			return nickname + " ÄãºÃ£¬»¶Ó­Äã¹Ø×¢¹«ÖÚºÅ";
+			return nickname + " ä½ å¥½ï¼Œæ¬¢è¿ä½ å…³æ³¨å…¬ä¼—å·";
 		case 3: 
-			return "Hello,"+ nickname + "·ÖÏíÏÂ·½º£±¨ÖÁÅóÓÑÈ¦»òÎ¢ĞÅÈº\n\n¡¾3¡¿Î»ºÃÓÑÉ¨ÂëÖúÁ¦¼´¿ÉÁìÈ¡";
+			return "Hello,"+ nickname + "åˆ†äº«ä¸‹æ–¹æµ·æŠ¥è‡³æœ‹å‹åœˆæˆ–å¾®ä¿¡ç¾¤\n\nã€3ã€‘ä½å¥½å‹æ‰«ç åŠ©åŠ›å³å¯é¢†å–\n\n";
 		}
 		return null;
 	}
-
-	// »Ø¸´ÎÄ±¾ĞÅÏ¢
+ 
+	// å›å¤æ–‡æœ¬ä¿¡æ¯
 	public static String getTextTemplate(Map<String, String> xmlMap) {
 		String template = "<xml>\r\n" + 
 				"  <ToUserName><![CDATA[" + xmlMap.get("FromUserName") + "]]></ToUserName>\r\n"+
@@ -37,7 +50,7 @@ public class TextTemplate {
 		return template;
 	}
 
-	// ¿Í·şÄ£°åÑ¡ÓÃ-- ¹Ø×¢¹«ÖÚºÅ»Ø¸´»¶Ó­´Ê
+	// å®¢æœæ¨¡æ¿é€‰ç”¨-- å…³æ³¨å…¬ä¼—å·å›å¤æ¬¢è¿è¯
 	public static String getCustomerTemplate(String nickname, Map<String, String> xmlMap) {
 		String result = "{\r\n" + 
 				"    \"touser\":\""+ xmlMap.get("FromUserName")+"\",\r\n" + 
@@ -50,7 +63,7 @@ public class TextTemplate {
 		return result;
 	}
 	
-	// ¿Í·şÄ£°åÑ¡ÓÃ-- ¹Ø×¢¹«ÖÚºÅ»Ø¸´É¨ÂëÖúÁ¦
+	// å®¢æœæ¨¡æ¿é€‰ç”¨-- å…³æ³¨å…¬ä¼—å·å›å¤æ‰«ç åŠ©åŠ›
 	public static String getCustomerTemplate2(String nickname, Map<String, String> xmlMap) {
 			String result = "{\r\n" + 
 					"    \"touser\":\""+ xmlMap.get("FromUserName")+"\",\r\n" + 
@@ -63,7 +76,7 @@ public class TextTemplate {
 			return result;
 		}
 
-	// ´ø²ÎÊı¹Ø×¢¹«ÖÚºÅ-- »Ø¸´Í¼Æ¬ÏûÏ¢
+	// å¸¦å‚æ•°å…³æ³¨å…¬ä¼—å·-- å›å¤å›¾ç‰‡æ¶ˆæ¯
 	public static String getEventWithParamsTemplate(Map<String, String> xmlMap) {
 		String template = "<xml>\r\n" + 
 				"  <ToUserName><![CDATA["+ xmlMap.get("FromUserName")+"]]></ToUserName>\r\n" + 
@@ -79,7 +92,7 @@ public class TextTemplate {
 		return template;
 	}
 
-	// ²»´ø²Î¹Ø×¢¹«ÖÚºÅ-- »Ø¸´Í¼Æ¬ÏûÏ¢
+	// ä¸å¸¦å‚å…³æ³¨å…¬ä¼—å·-- å›å¤å›¾ç‰‡æ¶ˆæ¯
 	public static String getEventWithoutParamsTemplate(Map<String, String> xmlMap) {
 		String template = "<xml>\r\n" + 
 				"  <ToUserName><![CDATA["+ xmlMap.get("FromUserName")+"]]></ToUserName>\r\n" + 
@@ -95,7 +108,7 @@ public class TextTemplate {
 		return template;
 	}
 
-	// Ö±½ÓÈ¡³ö²ÎÊı
+	// ç›´æ¥å–å‡ºå‚æ•°
 	public static String getEventParamsTemplate(Map<String, String> xmlMap) {
 		String template = "<xml>\r\n" + 
 				"  <ToUserName><![CDATA[" + xmlMap.get("FromUserName") + "]]></ToUserName>\r\n"+
@@ -108,9 +121,9 @@ public class TextTemplate {
 		return template;
 	}
 
-	// ¹Ø×¢¹«ÖÚºÅ»Ø¸´»¶Ó­´ÊµÄhttpÇëÇó
+	// å…³æ³¨å…¬ä¼—å·å›å¤æ¬¢è¿è¯çš„httpè¯·æ±‚
 	public static void getCustomerRequest(String nickname, Map<String, String> xmlMap) {
-		// »ñÈ¡¿Í·şµÄurl
+		// è·å–å®¢æœçš„url
 		String customerurl = TokenConfig.getCustomerUrl();
 		String result = TextTemplate.getCustomerTemplate(nickname, xmlMap);
 		HttpUtil.post(customerurl, result);
@@ -119,37 +132,79 @@ public class TextTemplate {
 		HttpUtil.post(customerurl, result2);
 	}
 
-	// »ñÈ¡¹«ÖÚºÅµÄ¶şÎ¬Âë²¢ÏÂÔØ
+	// è·å–å…¬ä¼—å·çš„äºŒç»´ç å¹¶ä¸‹è½½
 	public static String getDownloadcode(Map<String, String> xmlMap) {
 		String codeurl = TokenConfig.getQrcodeUrl();
-		// ´ø²ÎÊı
+		// å¸¦å‚æ•°
 		String data = "{\"expire_seconds\": 604800, \"action_name\": \"QR_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"\r\n"
 				+ ""+ xmlMap.get("FromUserName")+"\"}}}";
 		String result = HttpUtil.post(codeurl, data);
-		// ½âÎöÎ¢ĞÅ·şÎñÆ÷·¢¹ıÀ´json×Ö¶Î£¬È¡³öticket
+		// è§£æå¾®ä¿¡æœåŠ¡å™¨å‘è¿‡æ¥jsonå­—æ®µï¼Œå–å‡ºticket
 		JSONObject jsonObject = JSONUtil.parseObj(result);
 //		System.out.println(jsonObject);
 		String ticket = jsonObject.getStr("ticket");
 //		System.out.println(ticket);
-		// »ñÈ¡¶şÎ¬ÂëÍ¼Æ¬
+		// è·å–äºŒç»´ç å›¾ç‰‡
 		String fileUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + ticket;
-		// ÏÂÔØ¶şÎ¬Âë
-		// ½«ÎÄ¼şÏÂÔØºó±£´æÔÚÏîÄ¿ÏÂ
+//		System.out.println(fileUrl);
+		
+		String url = TokenConfig.getUserUrl();
+		url = url.replace("OPENID", xmlMap.get("FromUserName"));
+		// ä»å¾®ä¿¡æœåŠ¡å™¨è·å–å¯¹åº”çš„æƒé™
+		String userStr = HttpUtil.get(url);
+		// è§£æä»å¾®ä¿¡æœåŠ¡å™¨å‘è¿‡æ¥çš„jsonè¯·æ±‚
+		JSONObject jsonObject2 = JSONUtil.parseObj(userStr);
+//		System.out.println(jsonObject);
+		// å–å‡ºnickname
+		String headimgurl = jsonObject2.getStr("headimgurl");
+		
+		try {
+			ImageUtil();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		// ä¸‹è½½äºŒç»´ç 
+		// å°†æ–‡ä»¶ä¸‹è½½åä¿å­˜åœ¨é¡¹ç›®ä¸‹
 		HttpUtil.downloadFile(fileUrl, FileUtil.file("ticket.jpg"));
-		// ĞÂÔöÁÙÊ±ËØ²Ä
+		// æ–°å¢ä¸´æ—¶ç´ æ
 		String shortTimeUrl = TokenConfig.getMatterUrl();
 //		System.out.println(shortTimeUrl);
-		// ½«Í¼Æ¬´æÈëmapÖĞ
+		// å°†å›¾ç‰‡å­˜å…¥mapä¸­
 		HashMap<String, Object> paramMap = new HashMap<>();
-		// ÎÄ¼şÉÏ´«Ö»Ğè½«²ÎÊıÖĞµÄ¼üÖ¸¶¨£¨Ä¬ÈÏfile£©£¬ÖµÉèÎªÎÄ¼ş¶ÔÏó¼´¿É£¬¶ÔÓÚÊ¹ÓÃÕßÀ´Ëµ£¬ÎÄ¼şÉÏ´«ÓëÆÕÍ¨±íµ¥Ìá½»²¢ÎŞÇø±ğ
-		paramMap.put("file", FileUtil.file("ticket.jpg"));
+		// æ–‡ä»¶ä¸Šä¼ åªéœ€å°†å‚æ•°ä¸­çš„é”®æŒ‡å®šï¼ˆé»˜è®¤fileï¼‰ï¼Œå€¼è®¾ä¸ºæ–‡ä»¶å¯¹è±¡å³å¯ï¼Œå¯¹äºä½¿ç”¨è€…æ¥è¯´ï¼Œæ–‡ä»¶ä¸Šä¼ ä¸æ™®é€šè¡¨å•æäº¤å¹¶æ— åŒºåˆ«
+		paramMap.put("file", FileUtil.file("d:\\poster.jpg"));
 		String result2 = HttpUtil.post(shortTimeUrl, paramMap);
 //		System.out.println(result2);
-		// ½âÎöjson
-		JSONObject jsonObject2 = JSONUtil.parseObj(result2);
-		String mediaId = jsonObject2.getStr("media_id");
+		// è§£æjson
+		JSONObject jsonObject3 = JSONUtil.parseObj(result2);
+		String mediaId = jsonObject3.getStr("media_id");
 //		System.out.println(mediaId);
 		
 		return mediaId;
+	}
+	
+	private static boolean ImageUtil() throws IOException {
+		// å°†äºŒç»´ç å’Œå¤´åƒæ·»åŠ åˆ°æµ·æŠ¥ä¸Šå»
+			BufferedImage img = null;	
+				try {
+					img = ImageIO.read(new File("src/wx.jpg"));
+					BufferedImage er = ImageIO.read(new File("D:\\qrcode.jpg"));
+					BufferedImage logo = ImageIO.read(new URL("http://thirdwx.qlogo.cn/mmopen/EUGyxFcqibXddUQqwkQiazmSAnhKX7nKXsLxeaQYabcJ3QhW8aeE97VJ42eXXkuoVfLXs4kicWE3cbkFiatJ2hrXFic8kAp29pXj2/132"));
+					Graphics g = img.getGraphics();
+					Graphics g2 = er.getGraphics();
+					g2.drawImage(logo.getScaledInstance(100, 100, Image.SCALE_DEFAULT), 150, 150,null);
+					g.drawImage(er.getScaledInstance(204, 204, Image.SCALE_DEFAULT), 490, 803,null);
+					g.dispose();
+					
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		
+		return ImageIO.write(img, "jpg", new File("d:\\poster.jpg"));
+		
 	}
 }
