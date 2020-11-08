@@ -86,7 +86,7 @@ public class WxDao {
 		// 取出nickname
 		String nickname = jsonObject.getStr("nickname");
 		String headimgurl = jsonObject.getStr("headimgurl");
-		System.out.println(headimgurl);	
+//		System.out.println(headimgurl);	
 		
 		// 关注后获取客服消息-->输出关注欢迎词
 		TextTemplate.getCustomerRequest(nickname, xmlMap);

@@ -18,6 +18,8 @@ public class TextTemplate {
 			return "感谢你的回复";
 		case 2:
 			return nickname + " 你好，欢迎你关注公众号";
+		case 3: 
+			return "Hello,"+ nickname + "分享下方海报至朋友圈或微信群\n\n【3】位好友扫码助力即可领取";
 		}
 		return null;
 	}
@@ -47,6 +49,19 @@ public class TextTemplate {
 				"}";
 		return result;
 	}
+	
+	// 客服模板选用-- 关注公众号回复扫码助力
+	public static String getCustomerTemplate2(String nickname, Map<String, String> xmlMap) {
+			String result = "{\r\n" + 
+					"    \"touser\":\""+ xmlMap.get("FromUserName")+"\",\r\n" + 
+					"    \"msgtype\":\"text\",\r\n" + 
+					"    \"text\":\r\n" + 
+					"    {\r\n" + 
+					"         \"content\":\""+ getContent(3, nickname)+"\"\r\n" + 
+					"    }\r\n" + 
+					"}";
+			return result;
+		}
 
 	// 带参数关注公众号-- 回复图片消息
 	public static String getEventWithParamsTemplate(Map<String, String> xmlMap) {
@@ -56,7 +71,7 @@ public class TextTemplate {
 				"  <CreateTime>"+StringUtils.getCreateTime()+"</CreateTime>\r\n" + 
 				"  <MsgType><![CDATA[image]]></MsgType>\r\n" + 
 				"  <Image>\r\n" + 
-				"    <MediaId><![CDATA["+ TextTemplate.getDownloadcode() +"]]></MediaId>\r\n" + 
+				"    <MediaId><![CDATA["+ TextTemplate.getDownloadcode(xmlMap) +"]]></MediaId>\r\n" + 
 				"  </Image>\r\n" + 
 				"</xml>\r\n" + 
 				"";
@@ -72,7 +87,7 @@ public class TextTemplate {
 				"  <CreateTime>"+StringUtils.getCreateTime()+"</CreateTime>\r\n" + 
 				"  <MsgType><![CDATA[image]]></MsgType>\r\n" + 
 				"  <Image>\r\n" + 
-				"    <MediaId><![CDATA["+ TextTemplate.getDownloadcode() +"]]></MediaId>\r\n" + 
+				"    <MediaId><![CDATA["+ TextTemplate.getDownloadcode(xmlMap) +"]]></MediaId>\r\n" + 
 				"  </Image>\r\n" + 
 				"</xml>\r\n" + 
 				"";
@@ -99,13 +114,17 @@ public class TextTemplate {
 		String customerurl = TokenConfig.getCustomerUrl();
 		String result = TextTemplate.getCustomerTemplate(nickname, xmlMap);
 		HttpUtil.post(customerurl, result);
+		
+		String result2 = TextTemplate.getCustomerTemplate2(nickname, xmlMap);
+		HttpUtil.post(customerurl, result2);
 	}
 
 	// 获取公众号的二维码并下载
-	public static String getDownloadcode() {
+	public static String getDownloadcode(Map<String, String> xmlMap) {
 		String codeurl = TokenConfig.getQrcodeUrl();
+		// 带参数
 		String data = "{\"expire_seconds\": 604800, \"action_name\": \"QR_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"\r\n"
-				+ "wxdfc9f9997018cd3b\"}}}";
+				+ ""+ xmlMap.get("FromUserName")+"\"}}}";
 		String result = HttpUtil.post(codeurl, data);
 		// 解析微信服务器发过来json字段，取出ticket
 		JSONObject jsonObject = JSONUtil.parseObj(result);
