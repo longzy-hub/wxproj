@@ -12,16 +12,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
 
+import com.lzy.util.ImageUtil;
 import com.lzy.util.StringUtils;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
+import cn.hutool.core.img.Img;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import sun.awt.image.PixelConverter.Bgrx;
 
 public class TextTemplate {
 
@@ -137,7 +141,7 @@ public class TextTemplate {
 		String codeurl = TokenConfig.getQrcodeUrl();
 		// 带参数
 		String data = "{\"expire_seconds\": 604800, \"action_name\": \"QR_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"\r\n"
-				+ ""+ xmlMap.get("FromUserName")+"\"}}}";
+				+ ""+ xmlMap.get("FromUserName") +"\"}}}";
 		String result = HttpUtil.post(codeurl, data);
 		// 解析微信服务器发过来json字段，取出ticket
 		JSONObject jsonObject = JSONUtil.parseObj(result);
@@ -158,24 +162,19 @@ public class TextTemplate {
 		// 取出nickname
 		String headimgurl = jsonObject2.getStr("headimgurl");
 		
-		try {
-			ImageUtil();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		// 调用海报
+		ImageUtil.addimg(fileUrl, headimgurl);
 		
 		// 下载二维码
-		// 将文件下载后保存在项目下
-		HttpUtil.downloadFile(fileUrl, FileUtil.file("ticket.jpg"));
+		// 将文件下载后保存在项目服务器下
+//		HttpUtil.downloadFile(fileUrl, FileUtil.file("ticket.jpg"));
 		// 新增临时素材
 		String shortTimeUrl = TokenConfig.getMatterUrl();
 //		System.out.println(shortTimeUrl);
 		// 将图片存入map中
 		HashMap<String, Object> paramMap = new HashMap<>();
 		// 文件上传只需将参数中的键指定（默认file），值设为文件对象即可，对于使用者来说，文件上传与普通表单提交并无区别
-		paramMap.put("file", FileUtil.file("d:\\poster.jpg"));
+		paramMap.put("file", FileUtil.file("poster.jpg"));
 		String result2 = HttpUtil.post(shortTimeUrl, paramMap);
 //		System.out.println(result2);
 		// 解析json
@@ -186,25 +185,4 @@ public class TextTemplate {
 		return mediaId;
 	}
 	
-	private static boolean ImageUtil() throws IOException {
-		// 将二维码和头像添加到海报上去
-			BufferedImage img = null;	
-				try {
-					img = ImageIO.read(new File("src/wx.jpg"));
-					BufferedImage er = ImageIO.read(new File("D:\\qrcode.jpg"));
-					BufferedImage logo = ImageIO.read(new URL("http://thirdwx.qlogo.cn/mmopen/EUGyxFcqibXddUQqwkQiazmSAnhKX7nKXsLxeaQYabcJ3QhW8aeE97VJ42eXXkuoVfLXs4kicWE3cbkFiatJ2hrXFic8kAp29pXj2/132"));
-					Graphics g = img.getGraphics();
-					Graphics g2 = er.getGraphics();
-					g2.drawImage(logo.getScaledInstance(100, 100, Image.SCALE_DEFAULT), 150, 150,null);
-					g.drawImage(er.getScaledInstance(204, 204, Image.SCALE_DEFAULT), 490, 803,null);
-					g.dispose();
-					
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		
-		return ImageIO.write(img, "jpg", new File("d:\\poster.jpg"));
-		
-	}
 }
