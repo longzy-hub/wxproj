@@ -74,24 +74,7 @@ public class WxDao {
 	}
 
 	// 处理事件
-	private static String handleEventMessage(Map<String, String> xmlMap) {
-		// 获取用户url
-		String url = TokenConfig.getUserUrl();
-		url = url.replace("OPENID", xmlMap.get("FromUserName"));
-		// 从微信服务器获取对应的权限
-		String userStr = HttpUtil.get(url);
-		// 解析从微信服务器发过来的json请求
-		JSONObject jsonObject = JSONUtil.parseObj(userStr);
-//		System.out.println(jsonObject);
-		// 取出nickname
-		String nickname = jsonObject.getStr("nickname");
-		String headimgurl = jsonObject.getStr("headimgurl");
-//		System.out.println(headimgurl);	
-		
-		// 关注后获取客服消息-->输出关注欢迎词
-		TextTemplate.getCustomerRequest(nickname, xmlMap);
-		
-		
+	private static String handleEventMessage(Map<String, String> xmlMap) {		
 		return EventTemplate.getEventTemplate(xmlMap);
 	}
 

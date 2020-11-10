@@ -34,7 +34,7 @@ public class ImageUtil {
 			// 绘图
 			Graphics g = img.getGraphics();
 			Graphics g2 = er.getGraphics();
-			g.drawImage(ImgUtil.cut(headimg, 0, 0, 30), 10, 10, null);
+			g.drawImage(ImgUtil.cut(headimg.getScaledInstance(80, 80, Image.SCALE_DEFAULT), 0, 0, 30), 10, 10, null);
 			g.setFont(new Font("黑体",Font.PLAIN,25));
 //			System.out.println(g.getFont());
 			g.drawString("邀你一起参与领奖", 80, 50);
