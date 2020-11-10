@@ -15,7 +15,7 @@ public class EventTemplate {
 				return TextTemplate.getEventWithParamsTemplate(xmlMap);				
 			}else {
 				// 直接关注，没有带参二维码
-				return TextTemplate.getEventWithoutParamsTemplate(xmlMap);
+				return null;
 			}
 		case "SCAN":
 			// 已关注，

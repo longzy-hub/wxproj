@@ -67,6 +67,19 @@ public class TextTemplate {
 		return result;
 	}
 	
+	// 客服模板选用-- 关注公众号回复欢迎词
+	public static String getCustomerImgTemplate( Map<String, String> xmlMap) {
+		String result = "{\r\n" + 
+				"    \"touser\":\""+ xmlMap.get("FromUserName")+"\",\r\n" + 
+				"    \"msgtype\":\"image\",\r\n" + 
+				"    \"image\":\r\n" + 
+				"    {\r\n" + 
+				"      \"media_id\":\""+ TextTemplate.getDownloadcode(xmlMap) +"\"\r\n" + 
+				"    }\r\n" + 
+				"}";
+		return result;
+	}
+	
 	// 客服模板选用-- 关注公众号回复扫码助力
 	public static String getCustomerTemplate2(String nickname, Map<String, String> xmlMap) {
 			String result = "{\r\n" + 
@@ -98,18 +111,7 @@ public class TextTemplate {
 
 	// 不带参关注公众号-- 回复图片消息
 	public static String getEventWithoutParamsTemplate(Map<String, String> xmlMap) {
-		String template = "<xml>\r\n" + 
-				"  <ToUserName><![CDATA["+ xmlMap.get("FromUserName")+"]]></ToUserName>\r\n" + 
-				"  <FromUserName><![CDATA["+ xmlMap.get("ToUserName")+"]]></FromUserName>\r\n" + 
-				"  <CreateTime>"+StringUtils.getCreateTime()+"</CreateTime>\r\n" + 
-				"  <MsgType><![CDATA[image]]></MsgType>\r\n" + 
-				"  <Image>\r\n" + 
-				"    <MediaId><![CDATA["+ TextTemplate.getDownloadcode(xmlMap) +"]]></MediaId>\r\n" + 
-				"  </Image>\r\n" + 
-				"</xml>\r\n" + 
-				"";
-
-		return template;
+		return "";
 	}
 
 	// 直接取出参数
@@ -131,9 +133,13 @@ public class TextTemplate {
 		String customerurl = TokenConfig.getCustomerUrl();
 		String result = TextTemplate.getCustomerTemplate(nickname, xmlMap);
 		HttpUtil.post(customerurl, result);
-		
+		// 回复扫码助力消息
 		String result2 = TextTemplate.getCustomerTemplate2(nickname, xmlMap);
 		HttpUtil.post(customerurl, result2);
+		// 回复dm单
+		String resultImg = TextTemplate.getCustomerImgTemplate(xmlMap);
+		HttpUtil.post(customerurl, resultImg);
+		
 	}
 
 	// 获取公众号的二维码并下载
