@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8"%>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
