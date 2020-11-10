@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8"%>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
@@ -52,7 +53,7 @@
             <a href="reg.html">我要注册</a>
           </label>
         </div>
-        <a class="btn btn-lg btn-success btn-block" href="main.html"> 登录</a>
+        <a class="btn btn-lg btn-success btn-block" href="main.jsp"> 登录</a>
       </form>
     </div>
     <script src="jquery/jquery-2.1.1.min.js"></script>

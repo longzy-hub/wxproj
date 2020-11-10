@@ -17,14 +17,14 @@ import com.lzy.util.StringUtils;
 public class ConnectionServlet extends HttpServlet{
 	
 	/**
-	¿ª·¢ÕßÍ¨¹ı¼ìÑésignature¶ÔÇëÇó½øĞĞĞ£Ñé£¨ÏÂÃæÓĞĞ£Ñé·½Ê½£©¡£
-	ÈôÈ·ÈÏ´Ë´ÎGETÇëÇóÀ´×ÔÎ¢ĞÅ·şÎñÆ÷£¬ÇëÔ­Ñù·µ»Øechostr²ÎÊıÄÚÈİ£¬Ôò½ÓÈëÉúĞ§£¬³ÉÎª¿ª·¢Õß³É¹¦£¬·ñÔò½ÓÈëÊ§°Ü¡£¼ÓÃÜ/Ğ£ÑéÁ÷³ÌÈçÏÂ£º
-	1£©½«token¡¢timestamp¡¢nonceÈı¸ö²ÎÊı½øĞĞ×ÖµäĞòÅÅĞò
-	2£©½«Èı¸ö²ÎÊı×Ö·û´®Æ´½Ó³ÉÒ»¸ö×Ö·û´®½øĞĞsha1¼ÓÃÜ
-	3£©¿ª·¢Õß»ñµÃ¼ÓÃÜºóµÄ×Ö·û´®¿ÉÓësignature¶Ô±È£¬±êÊ¶¸ÃÇëÇóÀ´Ô´ÓÚÎ¢ĞÅ 
+	å¼€å‘è€…é€šè¿‡æ£€éªŒsignatureå¯¹è¯·æ±‚è¿›è¡Œæ ¡éªŒï¼ˆä¸‹é¢æœ‰æ ¡éªŒæ–¹å¼ï¼‰ã€‚
+	è‹¥ç¡®è®¤æ­¤æ¬¡GETè¯·æ±‚æ¥è‡ªå¾®ä¿¡æœåŠ¡å™¨ï¼Œè¯·åŸæ ·è¿”å›echostrå‚æ•°å†…å®¹ï¼Œåˆ™æ¥å…¥ç”Ÿæ•ˆï¼Œæˆä¸ºå¼€å‘è€…æˆåŠŸï¼Œå¦åˆ™æ¥å…¥å¤±è´¥ã€‚åŠ å¯†/æ ¡éªŒæµç¨‹å¦‚ä¸‹ï¼š
+	1ï¼‰å°†tokenã€timestampã€nonceä¸‰ä¸ªå‚æ•°è¿›è¡Œå­—å…¸åºæ’åº
+	2ï¼‰å°†ä¸‰ä¸ªå‚æ•°å­—ç¬¦ä¸²æ‹¼æ¥æˆä¸€ä¸ªå­—ç¬¦ä¸²è¿›è¡Œsha1åŠ å¯†
+	3ï¼‰å¼€å‘è€…è·å¾—åŠ å¯†åçš„å­—ç¬¦ä¸²å¯ä¸signatureå¯¹æ¯”ï¼Œæ ‡è¯†è¯¥è¯·æ±‚æ¥æºäºå¾®ä¿¡ 
 	 */
 	
-	// ½ÓÈë 
+	// æ¥å…¥ 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String signature = request.getParameter("signature");
@@ -32,32 +32,32 @@ public class ConnectionServlet extends HttpServlet{
 		String nonce = request.getParameter("nonce");
 		String echostr = request.getParameter("echostr");
 		String token = "lzy";
-		// ×ÖµäÅÅĞò
+		// å­—å…¸æ’åº
 		List<String> list = new ArrayList<String>();
 		list.add(token);
 		list.add(timestamp);
 		list.add(nonce);
 		Collections.sort(list);	
-		// sha1¼ÓÃÜ
+		// sha1åŠ å¯†
 		String str = StringUtils.getSha1Str(list.get(0) + list.get(1) + list.get(2));
 		if (signature.equals(str)) {
 			response.getWriter().print(echostr);
 		}else {
-			System.out.println("½ÓÈëÊ§°Ü");
+			System.out.println("æ¥å…¥å¤±è´¥");
 		}
 	}
 	
-	 // ÏìÓ¦
+	 // å“åº”
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// ÉèÖÃpost±àÂë½âÎö
+		// è®¾ç½®postç¼–ç è§£æ
 //		request.setCharacterEncoding("utf-8");
 //		response.setCharacterEncoding("utf-8");
-		// »ñÈ¡Î¢ĞÅ¶ËµÄÄÚÈİ
+		// è·å–å¾®ä¿¡ç«¯çš„å†…å®¹
 		Map<String, String> xmlMap = WxDao.handleMap(request);
-		// Õë¶ÔÄÚÈİ¸øÎ¢ĞÅ¶Ë»Ø¸´ÏìÓ¦
+		// é’ˆå¯¹å†…å®¹ç»™å¾®ä¿¡ç«¯å›å¤å“åº”
 		String responseStr = WxDao.getResponseStr(xmlMap);
-		// »ØËÍÎ¢ĞÅ·şÎñÆ÷
+		// å›é€å¾®ä¿¡æœåŠ¡å™¨
 		response.getWriter().print(responseStr);
 		
 		
