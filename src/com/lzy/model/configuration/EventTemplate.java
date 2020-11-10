@@ -9,6 +9,8 @@ import cn.hutool.json.JSONUtil;
 public class EventTemplate {
 
 	public static String getEventTemplate(Map<String, String> xmlMap) {
+		// 获取客服的url
+		String customerurl = TokenConfig.getCustomerUrl();
 		// 获取用户url
 		String url = TokenConfig.getUserUrl();
 		url = url.replace("OPENID", xmlMap.get("FromUserName"));
@@ -16,7 +18,7 @@ public class EventTemplate {
 		String userStr = HttpUtil.get(url);
 		// 解析从微信服务器发过来的json请求
 		JSONObject jsonObject = JSONUtil.parseObj(userStr);
-		System.out.println(jsonObject);
+//		System.out.println(jsonObject);
 		// 取出nickname
 		String nickname = jsonObject.getStr("nickname");
 //		String headimgurl = jsonObject.getStr("headimgurl");
@@ -29,8 +31,7 @@ public class EventTemplate {
 			if (ticket != null && ticket.length() > 0) {
 				// 关注后获取客服消息
 				TextTemplate.getCustomerRequest(nickname, xmlMap);
-				// 获取客服的url
-				String customerurl = TokenConfig.getCustomerUrl();
+				
 				// 扫描带参二维码回复消息
 				String result3 = TextTemplate.getCustomerMesTemplate(xmlMap);
 				HttpUtil.post(customerurl, result3);

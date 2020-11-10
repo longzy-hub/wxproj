@@ -21,6 +21,8 @@ public class TextTemplate {
 			return nickname + " 你好，欢迎你关注公众号";
 		case 3: 
 			return "Hello,"+ nickname + "分享下方海报至朋友圈或微信群\n\n【3】位好友扫码助力即可领取\n\n";
+		case 4:
+			return "你已经是我们的老朋友了，无法为好友助力";
 		}
 		return null;
 	}
@@ -55,7 +57,7 @@ public class TextTemplate {
 					"  <FromUserName><![CDATA[" + xmlMap.get("ToUserName") + "]]></FromUserName>\r\n"+ 
 					"  <CreateTime>"+ StringUtils.getCreateTime() + "</CreateTime>\r\n"+ 
 					"  <MsgType><![CDATA[text]]></MsgType>\r\n"+ 
-					"  <Content><![CDATA[" + xmlMap.get("TICKET") + "]]></Content>\r\n"+
+					"  <Content><![CDATA["+ getContent(4, null)+"]]></Content>\r\n"+
 					"</xml>";
 
 			return template;
