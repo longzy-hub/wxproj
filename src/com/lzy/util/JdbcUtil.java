@@ -9,6 +9,8 @@ import javax.sql.DataSource;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+
+
 //使用连接池，采用的c3p0连接�?
 public class JdbcUtil {
 	
