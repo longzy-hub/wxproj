@@ -13,6 +13,8 @@ import com.lzy.common.ConnectionContext;
 import com.lzy.model.dao.crm.base.BaseDao;
 import com.lzy.util.JdbcUtil;
 
+
+
 public class DaoFactory {
 	
 	private Object target;
@@ -58,7 +60,6 @@ public class DaoFactory {
 		} catch (IOException e) {
 			throw new RuntimeException("加载properties出问题");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RuntimeException("初始化dao出问题");
 		}
 	}

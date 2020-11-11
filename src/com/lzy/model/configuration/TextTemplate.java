@@ -3,6 +3,7 @@ package com.lzy.model.configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.lzy.model.pojo.User;
 import com.lzy.util.ImageUtil;
 import com.lzy.util.StringUtils;
 
@@ -64,39 +65,39 @@ public class TextTemplate {
 		}
 
 	// 客服模板选用-- 关注公众号回复欢迎词
-	public static String getCustomerTemplate(String nickname, Map<String, String> xmlMap) {
+	public static String getCustomerTemplate(User user, Map<String, String> xmlMap) {
 		String result = "{\r\n" + 
 				"    \"touser\":\""+ xmlMap.get("FromUserName")+"\",\r\n" + 
 				"    \"msgtype\":\"text\",\r\n" + 
 				"    \"text\":\r\n" + 
 				"    {\r\n" + 
-				"         \"content\":\""+ getContent(2, nickname)+"\"\r\n" + 
+				"         \"content\":\""+ getContent(2, user.getNickname())+"\"\r\n" + 
 				"    }\r\n" + 
 				"}";
 		return result;
 	}
 
 	// 客服模板选用-- 关注公众号回复扫码助力
-	public static String getCustomerTemplate2(String nickname, Map<String, String> xmlMap) {
+	public static String getCustomerTemplate2(User user, Map<String, String> xmlMap) {
 			String result = "{\r\n" + 
 					"    \"touser\":\""+ xmlMap.get("FromUserName")+"\",\r\n" + 
 					"    \"msgtype\":\"text\",\r\n" + 
 					"    \"text\":\r\n" + 
 					"    {\r\n" + 
-					"         \"content\":\""+ getContent(3, nickname)+"\"\r\n" + 
+					"         \"content\":\""+ getContent(3, user.getNickname())+"\"\r\n" + 
 					"    }\r\n" + 
 					"}";
 			return result;
 		}
 	
 	// 客服模板选用-- 关注公众号回复dm单
-	public static String getCustomerImgTemplate( Map<String, String> xmlMap) {
+	public static String getCustomerImgTemplate(User user, Map<String, String> xmlMap) {
 		String result = "{\r\n" + 
 				"    \"touser\":\""+ xmlMap.get("FromUserName")+"\",\r\n" + 
 				"    \"msgtype\":\"image\",\r\n" + 
 				"    \"image\":\r\n" + 
 				"    {\r\n" + 
-				"      \"media_id\":\""+ TextTemplate.getDownloadcode(xmlMap) +"\"\r\n" + 
+				"      \"media_id\":\""+ TextTemplate.getDownloadcode(user,xmlMap) +"\"\r\n" + 
 				"    }\r\n" + 
 				"}";
 		return result;
@@ -119,22 +120,22 @@ public class TextTemplate {
 
 	
 	// 关注公众号回复欢迎词的http请求
-	public static void getCustomerRequest(String nickname, Map<String, String> xmlMap) {
+	public static void getCustomerRequest(User user, Map<String, String> xmlMap) {
 		// 获取客服的url
 		String customerurl = TokenConfig.getCustomerUrl();
-		String result = TextTemplate.getCustomerTemplate(nickname, xmlMap);
+		String result = TextTemplate.getCustomerTemplate(user, xmlMap);
 		HttpUtil.post(customerurl, result);
 		// 回复扫码助力消息
-		String result2 = TextTemplate.getCustomerTemplate2(nickname, xmlMap);
+		String result2 = TextTemplate.getCustomerTemplate2(user, xmlMap);
 		HttpUtil.post(customerurl, result2);
 		// 回复dm单
-		String resultImg = TextTemplate.getCustomerImgTemplate(xmlMap);
+		String resultImg = TextTemplate.getCustomerImgTemplate(user,xmlMap);
 		HttpUtil.post(customerurl, resultImg);
 		
 	}
 
 	// 获取公众号的二维码并下载
-	public static String getDownloadcode(Map<String, String> xmlMap) {
+	public static String getDownloadcode(User user, Map<String, String> xmlMap) {
 		String codeurl = TokenConfig.getQrcodeUrl();
 		// 带参数
 		String data = "{\"expire_seconds\": 604800, \"action_name\": \"QR_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"\r\n"
@@ -149,18 +150,9 @@ public class TextTemplate {
 		String fileUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + ticket;
 //		System.out.println(fileUrl);
 		
-		String url = TokenConfig.getUserUrl();
-		url = url.replace("OPENID", xmlMap.get("FromUserName"));
-		// 从微信服务器获取对应的权限
-		String userStr = HttpUtil.get(url);
-		// 解析从微信服务器发过来的json请求
-		JSONObject jsonObject2 = JSONUtil.parseObj(userStr);
-//		System.out.println(jsonObject);
-		// 取出nickname
-		String headimgurl = jsonObject2.getStr("headimgurl");
 		
 		// 调用海报
-		ImageUtil.addimg(fileUrl, headimgurl);
+		ImageUtil.addimg(fileUrl, user.getHeadimgurl());
 		
 		// 下载二维码
 		// 将文件下载后保存在项目服务器下
