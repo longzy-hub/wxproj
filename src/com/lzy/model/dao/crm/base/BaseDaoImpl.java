@@ -2,6 +2,7 @@ package com.lzy.model.dao.crm.base;
 
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -65,6 +66,12 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("查询列表出现问题！！");
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
