@@ -13,11 +13,8 @@ import javax.imageio.ImageIO;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 
-
-
-
 // 测试拼接图片
-public   class   Test{          
+public   class   Test2{          
 	public static void main(String[] args) {
 		try {
 			String path = new Object() {
