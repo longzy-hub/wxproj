@@ -33,7 +33,7 @@ public class EventTemplate {
 				// 获取客服的url
 				String customerurl = TokenConfig.getCustomerUrl();
 				// 扫描带参二维码回复消息
-				String result3 = TextTemplate.getCustomerMesTemplate( xmlMap);
+				String result3 = TextTemplate.getCustomerMesTemplate(user, xmlMap);
 				HttpUtil.post(customerurl, result3);
 				// 扫描了带参数的二维码，并点击了关注
 				return TextTemplate.getEventWithParamsTemplate(xmlMap);				

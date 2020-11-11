@@ -9,8 +9,8 @@ import java.sql.Connection;
 import java.util.Properties;
 
 import com.lzy.annotation.MyTransaction;
+import com.lzy.base.BaseDao;
 import com.lzy.common.ConnectionContext;
-import com.lzy.model.dao.crm.base.BaseDao;
 import com.lzy.util.JdbcUtil;
 
 

@@ -24,6 +24,8 @@ public class TextTemplate {
 			return "Hello,"+ nickname + "分享下方海报至朋友圈或微信群\n\n【3】位好友扫码助力即可领取\n\n";
 		case 4:
 			return "你已经是我们的老朋友了，无法为好友助力";
+		case 5:
+			return nickname + ",已为你助力";
 		}
 		return null;
 	}
@@ -104,13 +106,13 @@ public class TextTemplate {
 	}
 	
 	// 扫描带参数的二维码后，回复消息
-	public static String getCustomerMesTemplate(Map<String, String> xmlMap) {
+	public static String getCustomerMesTemplate(User user,Map<String, String> xmlMap) {
 		String result = "{\r\n" + 
 				"    \"touser\":\""+xmlMap.get("EventKey").replace("qrscene_", "").trim()+"\",\r\n" + 
 				"    \"msgtype\":\"text\",\r\n" + 
 				"    \"text\":\r\n" + 
 				"    {\r\n" + 
-				"         \"content\":\"Hello World\"\r\n" + 
+				"         \"content\":\""+ getContent(5, user.getNickname()) +"\"\r\n" + 
 				"    }\r\n" + 
 				"}\r\n" + 
 				"";
@@ -152,7 +154,7 @@ public class TextTemplate {
 		
 		
 		// 调用海报
-		ImageUtil.addimg(fileUrl, user.getHeadimgurl());
+		ImageUtil.addimg(fileUrl, user);
 		
 		// 下载二维码
 		// 将文件下载后保存在项目服务器下

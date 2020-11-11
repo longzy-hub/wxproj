@@ -1,4 +1,4 @@
-package com.lzy.model.dao.crm.base;
+package com.lzy.base;
 
 
 import java.util.List;
