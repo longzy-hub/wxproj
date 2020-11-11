@@ -116,12 +116,34 @@ public class TextTemplate {
 //		System.out.println(xmlMap.get("EventKey").replace("qrscene_", "").trim());
 		return result;		
 	}
-
+	
+	//关注后生成自定义菜单--榜单
+	public static String getClickTemplate(Map<String, String> xmlMap) {
+		String result ="{\r\n" + 
+				"    \"button\": [\r\n" + 
+				"        {\r\n" + 
+				"            \"type\": \"click\", \r\n" + 
+				"            \"name\": \"榜单\", \r\n" + 
+				"            \"key\": \"luo\"\r\n" + 
+				"        }\r\n" + 
+				"    ],\r\n" + 
+				"    \"aaaa\": [\r\n" + 
+				"        {\r\n" + 
+				"            \"type\": \"click\", \r\n" + 
+				"            \"name\": \"意见与反馈\", \r\n" + 
+				"            \"key\": \"qq\"\r\n" + 
+				"        }\r\n" + 
+				"    ]\r\n" + 
+				"}";
+		return result;
+	}
 	
 	// 关注公众号回复欢迎词的http请求
 	public static void getCustomerRequest(String nickname, Map<String, String> xmlMap) {
 		// 获取客服的url
 		String customerurl = TokenConfig.getCustomerUrl();
+//		HttpUtil.post(customerurl, result4);
+		
 		String result = TextTemplate.getCustomerTemplate(nickname, xmlMap);
 		HttpUtil.post(customerurl, result);
 		// 回复扫码助力消息
@@ -130,6 +152,11 @@ public class TextTemplate {
 		// 回复dm单
 		String resultImg = TextTemplate.getCustomerImgTemplate(xmlMap);
 		HttpUtil.post(customerurl, resultImg);
+	
+		//获取创建菜单的URL
+		String clickUrl = TokenConfig.getClickUrl();
+		//获取菜单模板，通过post方式请求
+		HttpUtil.post(clickUrl, TextTemplate.getClickTemplate(xmlMap));	
 		
 	}
 
@@ -178,7 +205,7 @@ public class TextTemplate {
 		JSONObject jsonObject3 = JSONUtil.parseObj(result2);
 		String mediaId = jsonObject3.getStr("media_id");
 //		System.out.println(mediaId);
-		
+			
 		return mediaId;
 	}
 	
