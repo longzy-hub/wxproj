@@ -2,14 +2,10 @@ package com.lzy.model.dao.crm;
 
 import java.util.List;
 
-import com.lzy.annotation.MyTransaction;
+import com.lzy.model.dao.crm.base.BaseDao;
 
-public interface UserDao<User> {
-	// 添加用户
-	@MyTransaction
-	public void addUser(User user);
+public interface UserDao<User> extends BaseDao<User> {
 	
-	// 查询用户
-	public List<User> queryUser();
+	public void queryTest() ;
 	
 }

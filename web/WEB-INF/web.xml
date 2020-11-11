@@ -7,8 +7,7 @@
 	<servlet>
 		<servlet-name>ConnectionServlet</servlet-name>
 		<servlet-class>com.lzy.controller.ConnectionServlet</servlet-class>
-	</servlet>
-	
+	</servlet>	
 	<servlet-mapping>
 		<servlet-name>ConnectionServlet</servlet-name>
 		<url-pattern>/conn</url-pattern>
