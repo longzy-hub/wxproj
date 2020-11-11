@@ -1,7 +1,6 @@
 package com.lzy.model.dao.crm;
 
-
-import com.lzy.model.dao.crm.base.BaseDao;
+import com.lzy.base.BaseDao;
 
 public interface UserDao<User> extends BaseDao<User> {
 	
