@@ -20,7 +20,7 @@ public class Test1 {
 		UserDao ud = (UserDao) DaoFactory.getInstance().getDaoByName("userDao");
 		User user = new User();
 		user.setOpenid("oLC2p6QmNYf2uSR-Wpd5WVxmsdvA");
-		user.setNickname("拖hai哥");
+		user.setNickname("拖hai哥☺");
 		user.setSex(1);
 		user.setHeadimgurl("http://thirdwx.qlogo.cn/mmopen/Q3auHgzwzM7OItgkfTw9rmQtiajJibfBtMoFTriaBXXiazTxia2ZEfxbb2m8iahMfDxoLhGMwNT4V961IZXbYJtUXgZo3bO5kGl8ic2vD0U5fIDoe0/132");
 		ud.addUser(user);

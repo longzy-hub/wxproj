@@ -24,10 +24,10 @@ public class EventTemplate {
 			User user = createUser(xmlMap);
 			UserDao<User> ud = (UserDao<User>) DaoFactory.getInstance().getDaoByName("userDao");
 			// 如果数据库中已经存在用户，就不添加到数据库
-//			if (ud.queryUser(user.getOpenid()).equals(null)) {
-//				ud.addUser(user);					
-//			}
-		
+			if (null == ud.queryUser(user.getOpenid())) {
+				ud.addUser(user);					
+			}
+				
 			// 获取ticket元素
 			String ticket = xmlMap.get("Ticket");
 			if (ticket != null && ticket.length() > 0) {
