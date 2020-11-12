@@ -1,6 +1,7 @@
 package com.lzy.common;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 //连接的上下文工具,提供全局使用,保证线程变量的安�?
 public class ConnectionContext {//想成�?个存放线程的容器//做成单例模式，保证线程安�?
