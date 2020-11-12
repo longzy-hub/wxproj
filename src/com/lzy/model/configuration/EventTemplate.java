@@ -37,7 +37,8 @@ public class EventTemplate {
 				HttpUtil.post(customerurl, result3);
 				// 扫描了带参数的二维码，并点击了关注
 				return TextTemplate.getEventWithParamsTemplate(xmlMap);				
-			}else {			
+			}else {	
+				
 				// 关注后获取客服消息
 				TextTemplate.getCustomerRequest(user, xmlMap);
 				// 直接关注，没有带参二维码				

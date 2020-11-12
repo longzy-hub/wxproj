@@ -40,7 +40,7 @@ public class WxDao {
 				String key = e.getName();
 				String value = e.getStringValue();
 				xmlMap.put(key, value);
-//				System.out.println(key + "..." + value);					
+				System.out.println(key + "..." + value);					
 			}
 			return xmlMap;
 
