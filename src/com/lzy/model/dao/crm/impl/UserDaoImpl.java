@@ -1,6 +1,8 @@
 package com.lzy.model.dao.crm.impl;
 
 
+import java.util.List;
+
 import com.lzy.base.BaseDaoImpl;
 import com.lzy.model.dao.crm.UserDao;
 import com.lzy.model.pojo.User;
@@ -19,6 +21,15 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao<User>{
 		Object[] params = {openid};
 		User user = queryForBean(sql, params);
 		return user;		
+	}
+	
+	// 查询所有用户
+	@Override
+	public List<User> queryUsers() {
+		String sql = "select * from wx_user";
+		Object[] params = null;
+		List<User> lists = queryForList(sql, params);		
+		return lists;
 	}
 
 	// 测试
