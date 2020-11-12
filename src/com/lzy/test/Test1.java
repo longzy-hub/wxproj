@@ -1,6 +1,5 @@
 package com.lzy.test;
 
-import java.util.List;
 
 import org.junit.Test;
 
@@ -14,8 +13,6 @@ public class Test1 {
 	public void test1() {
 		UserDao ud =  (UserDao) DaoFactory.getInstance().getDaoByName("userDao");
 		ud.queryTest();
-
-		
 	}
 	
 	@Test

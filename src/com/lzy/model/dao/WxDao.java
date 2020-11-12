@@ -40,7 +40,7 @@ public class WxDao {
 				String key = e.getName();
 				String value = e.getStringValue();
 				xmlMap.put(key, value);
-				System.out.println(key + "..." + value);					
+//				System.out.println(key + "..." + value);					
 			}
 			return xmlMap;
 
@@ -52,6 +52,7 @@ public class WxDao {
 
 	// 回送微信端字符串
 	public static String getResponseStr(Map<String, String> xmlMap) {
+		
 		// 取出MsgType
 		String msgType = xmlMap.get("MsgType");
 		String resultXml = "";
