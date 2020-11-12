@@ -13,12 +13,6 @@ public class Test1 {
 	@Test
 	public void test1() {
 		UserDao ud =  (UserDao) DaoFactory.getInstance().getDaoByName("userDao");
-
-		List list=ud.queryUser();
-//		UserDao ud = new UserDaoImpl();
-//		ud.queryUser();
-	System.out.println();
-
 		ud.queryTest();
 
 		
