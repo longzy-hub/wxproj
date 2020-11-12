@@ -123,14 +123,12 @@ public class TextTemplate {
 	//关注后生成自定义菜单--榜单
 	public static String getClickTemplate(Map<String, String> xmlMap) {
 		String result ="{\r\n" + 
-				"    \"button1\": [\r\n" + 
+				"    \"button\": [\r\n" + 
 				"        {\r\n" + 
 				"            \"type\": \"click\", \r\n" + 
-				"            \"name\": \"榜单\", \r\n" + 
+				"            \"name\": \"排行榜\", \r\n" + 
 				"            \"key\": \"luo\"\r\n" + 
-				"        }\r\n" + 
-				"    ],\r\n" + 
-				"    \"aaa\": [\r\n" + 
+				"        },\r\n" + 
 				"        {\r\n" + 
 				"            \"type\": \"click\", \r\n" + 
 				"            \"name\": \"意见与反馈\", \r\n" + 
