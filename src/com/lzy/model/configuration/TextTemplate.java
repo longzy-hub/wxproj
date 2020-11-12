@@ -145,13 +145,7 @@ public class TextTemplate {
 	public static void getCustomerRequest(User user, Map<String, String> xmlMap) {
 		// 获取客服的url
 		String customerurl = TokenConfig.getCustomerUrl();
-
-//		HttpUtil.post(customerurl, result4);
-		
-		String result = TextTemplate.getCustomerTemplate(nickname, xmlMap);
-
 		String result = TextTemplate.getCustomerTemplate(user, xmlMap);
-
 		HttpUtil.post(customerurl, result);
 		// 回复扫码助力消息
 		String result2 = TextTemplate.getCustomerTemplate2(user, xmlMap);
