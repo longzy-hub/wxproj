@@ -22,14 +22,15 @@ public class ImageUtil {
 		// 将二维码和头像添加到海报上去
 		try {
 			// 获取背景图片的路径
-			String path = new Object() {
-				public String getPath() {
-					return this.getClass().getResource("/img/wx.jpg").getPath();
-				}
-			}.getPath().substring(1);
+//			String path = new Object() {
+//				public String getPath() {
+//					return this.getClass().getResource("/img/wx.jpg").getPath();
+//				}
+//			}.getPath().substring(1);
+			String path = "../../img";
 			// 获取背景图片
-			BufferedImage img = ImageIO.read(new File(path));
-			// 获取二维码图片
+			BufferedImage img = ImageIO.read(FileUtil.file(path+"/haibao/wx.jpg"));
+			// 获取二维码图片 
 			BufferedImage er = ImageIO.read(new URL(fileUrl));
 			// 获取用户头像图片
 			BufferedImage headimg = ImageIO.read(new URL(user.getHeadimgurl()));
@@ -43,8 +44,9 @@ public class ImageUtil {
 			g2.drawImage(headimg.getScaledInstance(100, 100, Image.SCALE_DEFAULT), 155, 155,null);
 			g.drawImage(er.getScaledInstance(204, 204, Image.SCALE_DEFAULT), 490, 803,null);
 			g.dispose();
-			String imgPath = path + "/img/"+ user.getOpenid()+".jpg";
-			ImageIO.write(img, "jpg",  new File(imgPath));
+			String imgPath = path + "/"+ user.getOpenid()+".jpg";
+			
+			ImageIO.write(img, "jpg", FileUtil.file(imgPath));
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -123,14 +123,14 @@ public class TextTemplate {
 	//关注后生成自定义菜单--榜单
 	public static String getClickTemplate(Map<String, String> xmlMap) {
 		String result ="{\r\n" + 
-				"    \"button\": [\r\n" + 
+				"    \"button1\": [\r\n" + 
 				"        {\r\n" + 
 				"            \"type\": \"click\", \r\n" + 
 				"            \"name\": \"榜单\", \r\n" + 
 				"            \"key\": \"luo\"\r\n" + 
 				"        }\r\n" + 
 				"    ],\r\n" + 
-				"    \"aaaa\": [\r\n" + 
+				"    \"aaa\": [\r\n" + 
 				"        {\r\n" + 
 				"            \"type\": \"click\", \r\n" + 
 				"            \"name\": \"意见与反馈\", \r\n" + 
@@ -153,11 +153,6 @@ public class TextTemplate {
 		// 回复dm单
 		String resultImg = TextTemplate.getCustomerImgTemplate(user,xmlMap);
 		HttpUtil.post(customerurl, resultImg);
-	
-		//获取创建菜单的URL
-		String clickUrl = TokenConfig.getClickUrl();
-		//获取菜单模板，通过post方式请求
-		HttpUtil.post(clickUrl, TextTemplate.getClickTemplate(xmlMap));	
 		
 	}
 
@@ -176,21 +171,24 @@ public class TextTemplate {
 		// 获取二维码图片
 		String fileUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + ticket;
 //		System.out.println(fileUrl);
-		
-		
-		// 调用海报
-		ImageUtil.addimg(fileUrl, user);
+		// 是否已经生成dm单
+		String path = "../../img/"+user.getOpenid()+".jpg";
+		if (!FileUtil.file(path).exists()) {
+			// 调用海报
+			ImageUtil.addimg(fileUrl, user);
+		}	
 		
 		// 下载二维码
 		// 将文件下载后保存在项目服务器下
 //		HttpUtil.downloadFile(fileUrl, FileUtil.file("ticket.jpg"));
+		
 		// 新增临时素材
 		String shortTimeUrl = TokenConfig.getMatterUrl();
 //		System.out.println(shortTimeUrl);
 		// 将图片存入map中
 		HashMap<String, Object> paramMap = new HashMap<>();
 		// 文件上传只需将参数中的键指定（默认file），值设为文件对象即可，对于使用者来说，文件上传与普通表单提交并无区别
-		paramMap.put("file", FileUtil.file("poster.jpg"));
+		paramMap.put("file", FileUtil.file(path));
 		String result2 = HttpUtil.post(shortTimeUrl, paramMap);
 //		System.out.println(result2);
 		// 解析json
