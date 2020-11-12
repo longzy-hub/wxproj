@@ -2,7 +2,7 @@ package com.lzy.test;
 
 import java.sql.Connection;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import com.lzy.util.JdbcUtil;
 

@@ -55,10 +55,17 @@ public class ConnectionServlet extends HttpServlet{
 //		response.setCharacterEncoding("utf-8");
 		// 获取微信端的内容
 		Map<String, String> xmlMap = WxDao.handleMap(request);
-		// 针对内容给微信端回复响应
-		String responseStr = WxDao.getResponseStr(xmlMap);
-		// 回送微信服务器
-		response.getWriter().print(responseStr);
+		try {
+			int i = 1/0;
+		} catch (Exception e) {
+			response.getWriter().print("");
+		}finally {
+			// 针对内容给微信端回复响应
+			String responseStr = WxDao.getResponseStr(xmlMap);
+			// 回送微信服务器
+			response.getWriter().print(responseStr);
+		}
+			
 		
 		
 	}

@@ -22,7 +22,7 @@ public class TokenConfig {
 	// 新增临时素材
 	private static String matterurl = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE ";
 	//获取自定义菜单url
-	private static String clickurl = " https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+	private static String clickurl = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 	
 	private static AccessToken at;
 

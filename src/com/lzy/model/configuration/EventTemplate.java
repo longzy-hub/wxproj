@@ -17,6 +17,7 @@ public class EventTemplate {
 		String clickUrl = TokenConfig.getClickUrl();
 		// 获取菜单模板，通过post方式请求
 		HttpUtil.post(clickUrl, TextTemplate.getClickTemplate(xmlMap));
+		
 		String event = xmlMap.get("Event");
 		switch (event) {
 		case "subscribe":

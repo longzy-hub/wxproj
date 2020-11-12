@@ -126,7 +126,7 @@ public class TextTemplate {
 				"    \"button1\": [\r\n" + 
 				"        {\r\n" + 
 				"            \"type\": \"click\", \r\n" + 
-				"            \"name\": \"榜单\", \r\n" + 
+				"            \"name\": \"排行榜\", \r\n" + 
 				"            \"key\": \"luo\"\r\n" + 
 				"        }\r\n" + 
 				"    ],\r\n" + 
