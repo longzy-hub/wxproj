@@ -1,4 +1,5 @@
 <%@page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
@@ -31,14 +32,8 @@
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-user"></i>${loginUser.username} <span class="caret"></span>
+					退出登录
 				  </button>
-					  <ul class="dropdown-menu" role="menu">
-						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
-						<li class="divider"></li>
-						<li><a href="DispatcherServlet?method=loginPage"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
-					  </ul>
 			    </div>
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
@@ -60,64 +55,15 @@
 			<div class="tree">
 				<ul style="padding-left:0px;" class="list-group">
 					<li class="list-group-item tree-closed" >
-						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
+						<a href="main.jsp"><i class="glyphicon glyphicon-dashboard"></i> 活动分析</a> 
 					</li>
-					<li class="list-group-item">
-						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span> 
+					<li class="list-group-item ">
+						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 信息维护<span class="badge" style="float:right">1</span></span> 
 						<ul style="margin-top:10px;">
 							<li style="height:30px;">
-								<a href="user.html" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="role.html"><i class="glyphicon glyphicon-king"></i> 角色维护</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
+								<a href="user.jsp" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
 							</li>
 						</ul>
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon-ok"></i> 业务审核 <span class="badge" style="float:right">3</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="auth_cert.html"><i class="glyphicon glyphicon-check"></i> 实名认证审核</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="auth_adv.html"><i class="glyphicon glyphicon-check"></i> 广告审核</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="auth_project.html"><i class="glyphicon glyphicon-check"></i> 项目审核</a> 
-							</li>
-						</ul>
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon-th-large"></i> 业务管理 <span class="badge" style="float:right">7</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="cert.html"><i class="glyphicon glyphicon-picture"></i> 资质维护</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="type.html"><i class="glyphicon glyphicon-equalizer"></i> 分类管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="process.html"><i class="glyphicon glyphicon-random"></i> 流程管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="advertisement.html"><i class="glyphicon glyphicon-hdd"></i> 广告管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="message.html"><i class="glyphicon glyphicon-comment"></i> 消息模板</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="project_type.html"><i class="glyphicon glyphicon-list"></i> 项目分类</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="tag.html"><i class="glyphicon glyphicon-tags"></i> 项目标签</a> 
-							</li>
-						</ul>
-					</li>
-					<li class="list-group-item tree-closed" >
-						<a href="param.html"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a> 
 					</li>
 				</ul>
 			</div>
@@ -148,20 +94,33 @@
                 <tr >
                   <th width="30">#</th>
 				  <th width="30"><input type="checkbox" id="allSelBox"></th>
-                  <th>账号</th>
-                  <th>名称</th>
-                  <th>邮箱地址</th>
+                  <th>用户标识</th>
+                  <th>用户昵称</th>
+                  <th>性别</th>
+                  <th>头像地址</th>
                   <th width="100">操作</th>
                 </tr>
               </thead>
-	              <tbody id="userData">
+	              <tbody id="userData">	
+	              <c:forEach items="lists" var="l">
+	              	<tr>
+	              		<td>${l.id}</td>
+	              		<td width="30"><input type="checkbox" id="allSelBox"></td>
+	              	</tr>
+	              
+	              
+	              </c:forEach>
 	              
 	              </tbody>
 			  <tfoot>
 			     <tr >
-				     <td colspan="6" align="center">
+				     <td colspan="7" align="center">
 						<ul class="pagination">
-							
+							<li><a href='#'>上一页</a></li>
+							<li  class='active'><a href='#'>1</a></li>
+							<li  class=''><a href='#'>2</a></li>
+							<li  class=''><a href='#'>3</a></li>
+							<li><a href='#'>下一页</a></li>
 						</ul>
 					 </td>
 				 </tr>
@@ -179,6 +138,5 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="script/docs.min.js"></script>
 	<script src="layer/layer.js"></script>
- 	<script src="/ui/user/user.js"></script>
    </body>
 </html>
