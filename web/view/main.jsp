@@ -1,4 +1,6 @@
+
 <%@page pageEncoding="UTF-8"%>
+
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
@@ -29,7 +31,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <div><a class="navbar-brand" style="font-size:32px;" href="#">CRM-System</a></div>
+          <div><a class="navbar-brand" style="font-size:32px;" href="#">微信裂变后台管理系统</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -39,10 +41,10 @@
 					<i class="glyphicon glyphicon-user"></i> ${loginUser.username}<span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
-						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
+						<!-- <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
-						<li class="divider"></li>
-						<li><a href="DispatcherServlet?method=loginPage"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li class="divider"></li> -->
+						<li><a href="/wxproj/view/login.jsp"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
@@ -64,13 +66,13 @@
 			<div class="tree">
 				<ul style="padding-left:0px;" class="list-group">
 					<li class="list-group-item tree-closed" >
-						<a href="main.jsp"><i class="glyphicon glyphicon-dashboard"></i> 活动分析</a> 
+						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 活动分析</a> 
 					</li>
 					<li class="list-group-item tree-closed">
 						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 客服管理 <span class="badge" style="float:right">5</span></span> 
 						<ul style="margin-top:10px;display:none;">
 							<li style="height:30px;">
-								<a href="/wxproj/UserServlet"><i class="glyphicon glyphicon-user"></i> 信息维护</a> 
+								<a href="user.jsp"><i class="glyphicon glyphicon-user"></i> 信息维护</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="/DispatcherServlet?method=rolePage"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
@@ -79,7 +81,7 @@
 								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 层级关系</a> 
+								<a href="hierarchy.jsp"><i class="glyphicon glyphicon-lock"></i> 层级关系</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 活动分析</a> 
@@ -137,4 +139,5 @@
             });
         </script>
   </body>
+
 </html>

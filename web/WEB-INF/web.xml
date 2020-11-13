@@ -24,6 +24,15 @@
 		<url-pattern>/conn</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ImgServlet</servlet-name>
+		<servlet-class>img.ImgServlet</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>ImgServlet</servlet-name>
+		<url-pattern>/ImgServlet</url-pattern>
+	</servlet-mapping>
+	
 	 <filter>
     	<filter-name>CharacterEncodingFilter</filter-name>	
     	<filter-class>com.lzy.filter.CharacterEncodingFilter</filter-class>
