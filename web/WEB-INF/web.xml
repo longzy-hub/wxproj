@@ -5,6 +5,14 @@
 	id="WebApp_ID" version="3.0">
 	
 	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.lzy.controller.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/LoginServlet</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>UserServlet</servlet-name>
