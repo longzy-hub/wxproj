@@ -18,7 +18,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <div><a class="navbar-brand" href="#" style="font-size:32px;">微信裂变后台管理系统</a></div>
+          <div><a class="navbar-brand" href="#" style="font-size:32px;">CRM-System</a></div>
         </div>
       </div>
     </nav>
