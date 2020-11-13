@@ -1,11 +1,15 @@
 package com.lzy.model.dao.crm.impl;
 
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 import com.lzy.base.BaseDaoImpl;
 import com.lzy.model.dao.crm.UserDao;
 import com.lzy.model.pojo.User;
+import com.lzy.util.JdbcUtil;
 
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao<User>{
 
@@ -23,15 +27,34 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao<User>{
 		return user;		
 	}
 	
-	// 查询所有用户
+	// 查询用户
 	@Override
-	public List<User> queryUsers() {
-		String sql = "select * from wx_user";
-		Object[] params = null;
+	public List<User> list(int start, int count) {
+		String sql = "select * from wx_user order by id desc limit ?,?";
+		Object[] params = {start, count};
 		List<User> lists = queryForList(sql, params);		
 		return lists;
 	}
-
+	// 统计数据条数
+	@Override
+	public int getTotal() {
+		int total = 0;
+		try {
+			Connection conn = JdbcUtil.getConnection();
+			String sql = "select count(*) from wx_user";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				total = rs.getInt(1);
+			}
+//			System.out.println(total);
+			JdbcUtil.close(conn, st, rs);			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 	// 测试
 	@Override
 	public void queryTest() {

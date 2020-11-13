@@ -8,6 +8,22 @@ import com.lzy.model.dao.factory.DaoFactory;
 import com.lzy.model.pojo.User;
 
 public class Test1 {
+	
+	// 查询用户
+	@Test
+	public void test6() {
+		UserDao<User> ud = (UserDao<User>) DaoFactory.getInstance().getDaoByName("userDao");
+		System.out.println(ud.list(1, 5));
+	}
+	
+	// 测试统计条数
+	@Test
+	public void test5() {
+		UserDao<User> ud = (UserDao<User>) DaoFactory.getInstance().getDaoByName("userDao");
+		ud.getTotal();
+	}
+	
+	
 	// 测试环境搭建
 	@Test
 	public void test1() {
@@ -28,7 +44,7 @@ public class Test1 {
 	@Test
 	public void test3() {
 		UserDao ud = (UserDao) DaoFactory.getInstance().getDaoByName("userDao");
-		System.out.println(ud.queryUser("oLC2p6QmNYf2uSR-Wpd5WVxmsdvA"));
+		System.out.println(ud.queryUser("oLC2p6QmNYf2uSR-Wpd5WVxmsdv2"));
 	}
 	
 
