@@ -10,8 +10,8 @@ public class TokenConfig {
 
 	// 获取Access Token 接口调用地址
 	private static String accessTokenUrl = " https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-	private static String APPID = "wx05c3e4075b1d606e";
-	private static String APPSECRET = "1e33fc38ee29fa8fdfd2cf0f29fc2886";
+	private static String APPID = "wxdfc9f9997018cd3b";
+	private static String APPSECRET = "78bb7c7a9afab8c456d1dff72d8a15e1";
 	
 	// 获取客服的url
 	private static String customerurl = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN";
@@ -22,7 +22,7 @@ public class TokenConfig {
 	// 新增临时素材
 	private static String matterurl = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE ";
 	//获取自定义菜单url
-	private static String clickurl = " https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+	private static String clickurl = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 	
 	private static AccessToken at;
 
@@ -77,8 +77,6 @@ public class TokenConfig {
 	//获取自定义菜单的调用接口
 	public static String getClickUrl() {
 		clickurl = clickurl.replace("ACCESS_TOKEN", TokenConfig.getAccessToken());
-//		System.out.println("罗"+TokenConfig.getAccessToken());
-//		System.out.println(clickurl);
 		return clickurl;
 	}
 	

@@ -13,21 +13,25 @@ import cn.hutool.json.JSONUtil;
 public class EventTemplate {
 
 	public static String getEventTemplate(Map<String, String> xmlMap) {
+		// 获取创建菜单的URL
+		String clickUrl = TokenConfig.getClickUrl();
+		// 获取菜单模板，通过post方式请求
+		HttpUtil.post(clickUrl, TextTemplate.getClickTemplate(xmlMap));
 		
 		String event = xmlMap.get("Event");
 		switch (event) {
-		case "subscribe": 			
+		case "subscribe":
 			User user = createUser(xmlMap);
 			UserDao<User> ud = (UserDao<User>) DaoFactory.getInstance().getDaoByName("userDao");
 			// 如果数据库中已经存在用户，就不添加到数据库
-			if (ud.queryUser(user.getOpenid()).equals(null)) {
+			if (null == ud.queryUser(user.getOpenid())) {
 				ud.addUser(user);					
 			}
-			
+				
 			// 获取ticket元素
 			String ticket = xmlMap.get("Ticket");
 			if (ticket != null && ticket.length() > 0) {
-				
+
 				// 关注后获取客服消息
 				TextTemplate.getCustomerRequest(user, xmlMap);
 				// 获取客服的url
@@ -36,20 +40,20 @@ public class EventTemplate {
 				String result3 = TextTemplate.getCustomerMesTemplate(user, xmlMap);
 				HttpUtil.post(customerurl, result3);
 				// 扫描了带参数的二维码，并点击了关注
-				return TextTemplate.getEventWithParamsTemplate(xmlMap);				
-			}else {	
-				
+				return TextTemplate.getEventWithParamsTemplate(xmlMap);
+			} else {
+
 				// 关注后获取客服消息
 				TextTemplate.getCustomerRequest(user, xmlMap);
-				// 直接关注，没有带参二维码				
+				// 直接关注，没有带参二维码
 				return TextTemplate.getEventWithoutParamsTemplate(xmlMap);
 			}
 		case "SCAN":
 			// 已关注，
-			return TextTemplate.getEventParamsTemplate(xmlMap);		
+			return TextTemplate.getEventParamsTemplate(xmlMap);
 		}
-		
-		return null;		
+
+		return null;
 	}
 
 	// 获取用户的信息，存入User中
@@ -73,7 +77,7 @@ public class EventTemplate {
 		user.setNickname(nickname);
 		user.setSex(sex);
 		user.setHeadimgurl(headimgurl);
-		
+
 		return user;
 	}
 
