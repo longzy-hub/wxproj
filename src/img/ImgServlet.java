@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ImgServlet extends HttpServlet {
-	private static final long serialVersionUID = -4665296033832173897L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

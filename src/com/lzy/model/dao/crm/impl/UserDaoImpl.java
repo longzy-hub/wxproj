@@ -55,6 +55,15 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao<User>{
 		}
 		return total;
 	}
+	// 查询所有用户
+	@Override
+	public List<User> queryUsers() {
+		String sql = "select * from wx_user";
+		Object[] params = null;
+		List<User> lists = queryForList(sql, params);
+		return lists;
+	}
+	
 	// 测试
 	@Override
 	public void queryTest() {
