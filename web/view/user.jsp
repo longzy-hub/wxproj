@@ -56,7 +56,7 @@
 			<div class="tree">
 				<ul style="padding-left:0px;" class="list-group">
 					<li class="list-group-item tree-closed" >
-						<a href="main.jsp"><i class="glyphicon glyphicon-dashboard"></i> 活动分析</a> 
+						<a href="${basePath}/view/main.jsp"><i class="glyphicon glyphicon-dashboard"></i> 活动分析</a> 
 					</li>
 					<li class="list-group-item ">
 						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 信息维护<span class="badge" style="float:right">1</span></span> 

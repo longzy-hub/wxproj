@@ -7,8 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 
 import com.lzy.model.dao.crm.UserDao;
 import com.lzy.model.dao.factory.DaoFactory;
@@ -17,19 +15,12 @@ import com.lzy.model.pojo.User;
 public class UserServlet extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
-
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		UserDao<User> userDao = (UserDao<User>) DaoFactory.getInstance().getDaoByName("userDao");
 		
 		int start = 0;
-		int count = 5; // 显示的行数
+		int count = 2; // 显示的行数
 
 		try {
 			start = Integer.parseInt(request.getParameter("start"));
@@ -63,6 +54,12 @@ public class UserServlet extends HttpServlet {
 		request.getRequestDispatcher("view/user.jsp").forward(request, response);
 		// 重定向
 //		response.sendRedirect("view/user.jsp");
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }
