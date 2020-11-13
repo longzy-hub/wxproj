@@ -10,27 +10,30 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import com.lzy.model.pojo.User;
+
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 
 // 拼接海报
 public class ImageUtil {
 
-	public  static void addimg(String fileUrl, String headimgurl) {
+	public  static void addimg(String fileUrl, User user) {
 		// 将二维码和头像添加到海报上去
 		try {
 			// 获取背景图片的路径
-			String path = new Object() {
-				public String getPath() {
-					return this.getClass().getResource("/img/wx.jpg").getPath();
-				}
-			}.getPath().substring(1);
+//			String path = new Object() {
+//				public String getPath() {
+//					return this.getClass().getResource("/img/wx.jpg").getPath();
+//				}
+//			}.getPath().substring(1);
+			String path = "../../img";
 			// 获取背景图片
-			BufferedImage img = ImageIO.read(new File(path));
-			// 获取二维码图片
+			BufferedImage img = ImageIO.read(FileUtil.file(path+"/haibao/wx.jpg"));
+			// 获取二维码图片 
 			BufferedImage er = ImageIO.read(new URL(fileUrl));
 			// 获取用户头像图片
-			BufferedImage headimg = ImageIO.read(new URL(headimgurl));
+			BufferedImage headimg = ImageIO.read(new URL(user.getHeadimgurl()));
 			// 绘图
 			Graphics g = img.getGraphics();
 			Graphics g2 = er.getGraphics();
@@ -41,7 +44,10 @@ public class ImageUtil {
 			g2.drawImage(headimg.getScaledInstance(100, 100, Image.SCALE_DEFAULT), 155, 155,null);
 			g.drawImage(er.getScaledInstance(204, 204, Image.SCALE_DEFAULT), 490, 803,null);
 			g.dispose();
-			ImageIO.write(img, "jpg",  FileUtil.file("poster.jpg"));
+			String imgPath = path + "/"+ user.getOpenid()+".jpg";
+			
+			ImageIO.write(img, "jpg", FileUtil.file(imgPath));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -21,6 +21,8 @@ public class TokenConfig {
 	private static String qrcodeurl = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=TOKEN";
 	// 新增临时素材
 	private static String matterurl = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE ";
+	//获取自定义菜单url
+	private static String clickurl = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 	
 	private static AccessToken at;
 
@@ -72,7 +74,11 @@ public class TokenConfig {
 		return matterurl;
 	}
 	
-	
+	//获取自定义菜单的调用接口
+	public static String getClickUrl() {
+		clickurl = clickurl.replace("ACCESS_TOKEN", TokenConfig.getAccessToken());
+		return clickurl;
+	}
 	
 	
 	

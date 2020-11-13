@@ -52,6 +52,7 @@ public class WxDao {
 
 	// 回送微信端字符串
 	public static String getResponseStr(Map<String, String> xmlMap) {
+		
 		// 取出MsgType
 		String msgType = xmlMap.get("MsgType");
 		String resultXml = "";

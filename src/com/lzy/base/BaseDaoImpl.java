@@ -1,7 +1,8 @@
-package com.lzy.model.dao.crm.base;
+package com.lzy.base;
 
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.dbutils.handlers.BeanHandler;
