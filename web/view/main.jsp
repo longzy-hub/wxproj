@@ -1,4 +1,3 @@
-
 <%@page pageEncoding="UTF-8"%>
 
 <html lang="zh-CN">
@@ -66,16 +65,16 @@
 			<div class="tree">
 				<ul style="padding-left:0px;" class="list-group">
 					<li class="list-group-item tree-closed" >
-						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 活动分析</a> 
+						<a href="main.jsp"><i class="glyphicon glyphicon-dashboard"></i> 活动分析</a> 
 					</li>
 					<li class="list-group-item tree-closed">
 						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 客服管理 <span class="badge" style="float:right">5</span></span> 
 						<ul style="margin-top:10px;display:none;">
 							<li style="height:30px;">
-								<a href="user.jsp"><i class="glyphicon glyphicon-user"></i> 信息维护</a> 
+								<a href="/wxproj/UserServlet"><i class="glyphicon glyphicon-user"></i> 信息维护</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="/DispatcherServlet?method=rolePage"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
+								<a href="/wxproj/ImgServlet"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
