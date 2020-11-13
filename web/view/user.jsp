@@ -1,5 +1,6 @@
 <%@page pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
@@ -8,9 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="${basePath}/view/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${basePath}/view/css/font-awesome.min.css">
+	<link rel="stylesheet" href="${basePath}/view/css/main.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -71,7 +72,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-				<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
+				<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 用户列表</h3>
 			  </div>
 			  <div class="panel-body">
 <form class="form-inline" role="form" style="float:left;">
@@ -87,6 +88,7 @@
 <button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='/DispatcherServlet?method=userAddPage'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
+ 		  <b>性别： 1表示男，2表示女，0表示未知</b>
           <div class="table-responsive">
             <form id="userForm">
             <table class="table  table-bordered">
@@ -97,32 +99,32 @@
                   <th>用户标识</th>
                   <th>用户昵称</th>
                   <th>性别</th>
-                  <th>头像地址</th>
                   <th width="100">操作</th>
                 </tr>
               </thead>
 	              <tbody id="userData">	
-	              <c:forEach items="lists" var="l">
-	              	<tr>
-	              		<td>${l.id}</td>
-	              		<td width="30"><input type="checkbox" id="allSelBox"></td>
-	              	</tr>
-	              
-	              
-	              </c:forEach>
-	              
+		              <c:forEach items="${users}" var="user">
+		              	<tr>
+		              		<td>${user.id}</td>
+		              		<td width="30"><input type="checkbox" id="allSelBox"></td>
+		              		<td>${user.openid}</td>
+		              		<td>${user.nickname}</td>
+		              		<td>${user.sex}</td>
+		              	<%-- 	<td>${l.getHeadimgurl()}</td> --%>
+		              		<td>
+    							<button type='button' onclick='goUpdatePage("+user.id+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>
+    						</td>
+		              	</tr>
+		              </c:forEach>
 	              </tbody>
 			  <tfoot>
 			     <tr >
-				     <td colspan="7" align="center">
-						<ul class="pagination">
-							<li><a href='#'>上一页</a></li>
-							<li  class='active'><a href='#'>1</a></li>
-							<li  class=''><a href='#'>2</a></li>
-							<li  class=''><a href='#'>3</a></li>
-							<li><a href='#'>下一页</a></li>
-						</ul>
-					 </td>
+					<td colspan="6" align="center">
+			            <a href="UserServlet?start=0">[首  页]</a>
+			            <a href="UserServlet?start=${pre}">[上一页]</a>
+			            <a href="UserServlet?start=${next}">[下一页]</a>
+			            <a href="UserServlet?start=${last}">[末  页]</a>
+			        </td>
 				 </tr>
 			  </tfoot>
             </table>
