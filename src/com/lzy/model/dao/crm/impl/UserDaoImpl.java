@@ -30,7 +30,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao<User>{
 	// 查询用户
 	@Override
 	public List<User> list(int start, int count) {
-		String sql = "select * from wx_user order by id desc limit ?,?";
+		String sql = "select * from wx_user limit ?,?";
 		Object[] params = {start, count};
 		List<User> lists = queryForList(sql, params);		
 		return lists;

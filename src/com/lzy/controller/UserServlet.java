@@ -20,7 +20,7 @@ public class UserServlet extends HttpServlet {
 		UserDao<User> userDao = (UserDao<User>) DaoFactory.getInstance().getDaoByName("userDao");
 		
 		int start = 0;
-		int count = 2; // 显示的行数
+		int count = 5; // 显示的行数
 
 		try {
 			start = Integer.parseInt(request.getParameter("start"));
